@@ -1,0 +1,34 @@
+def StringToArray(string: str) -> list: # Эта функция представляет строку как массив из их ASCII кодов
+    arr = []
+    for i in string:
+        arr.append(ord(i))
+    return arr 
+
+def multiplicative_hash(arr: list) -> list: # Функция для хэширования методом умножения
+    M = len(arr)
+    C = (5**(1/2)-1)/2 # Оптимальная константа которую вывел Дональд Кнут
+    arr = StringToArray(arr)
+    hash = []
+    for i in arr: # Хэшируем каждую букву
+        h = (M*((i*C)%1)) # h / M = (i*C)%1
+        #hash.append(str(h) + " ")
+        hash.append(str(h))
+    #hash = "".join(hash) # Объединяем получившийся массив в одну строку
+    return hash
+
+def re(hash):
+    hash = list(map(float,hash))
+    M = len(hash)
+    C = (5**(1/2)-1)/2
+    line = ''
+    
+    for h in hash:
+        for i in range(1, ord('я')+1):
+            if i * C % 1 == h/M:
+                #print(i)
+                line += (chr(i))
+                break
+    return line
+
+print(multiplicative_hash('абвгдэюяABC123'))
+print(re(multiplicative_hash('абвгдэюяABC123')))
